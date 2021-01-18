@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">poluent_beach</string>
+    <string name="report_beach">Report Beach</string>
+    <string name="show_beach">View Reported Beaches</string>
+    <string name="choose_language">Choose Language</string>
+    <string name="back">Back</string>
+</resources>

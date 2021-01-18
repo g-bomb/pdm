@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name" translatable="false">poluent_beach</string>
+    <string name="report_beach">Reportar Praia</string>
+    <string name="show_beach">Ver Praias Reportadas</string>
+    <string name="choose_language">Escolher Idioma</string>
+    <string name="back">Voltar</string>
+</resources>
