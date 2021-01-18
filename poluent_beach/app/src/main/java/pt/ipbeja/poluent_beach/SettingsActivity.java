@@ -45,7 +45,7 @@ public class SettingsActivity extends AppCompatActivity {
                 configuration.locale = myLocale;
                 resources.updateConfiguration(configuration, metrics);
                 setResult(LANGUAGE_CHANGE);
-                finish();
+                recreate();
             }
         });
 
@@ -59,7 +59,7 @@ public class SettingsActivity extends AppCompatActivity {
                 configuration.locale = myLocale;
                 resources.updateConfiguration(configuration, metrics);
                 setResult(LANGUAGE_CHANGE);
-                finish();
+                recreate();
 
             }
         });

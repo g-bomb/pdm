@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        buttonSettings = findViewById(R.id.settingsButton);
+        buttonSettings = findViewById(R.id.mapButton);
         reportButton = findViewById(R.id.reportButton);
         showButton = findViewById(R.id.showButton);
 
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == LANGUAGE_CODE && resultCode == RESULT_OK) {
             Intent refresh = new Intent(this, MainActivity.class);
-            finish();
+            //finish();
             startActivity(refresh);
         }
 
