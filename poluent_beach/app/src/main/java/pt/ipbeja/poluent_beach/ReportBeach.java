@@ -17,10 +17,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.io.ByteArrayOutputStream;
 import java.util.Objects;
 
 public class ReportBeach extends AppCompatActivity {
@@ -45,17 +43,18 @@ public class ReportBeach extends AppCompatActivity {
     private Button buttonCancel;
     private ImageView selectedPhoto;
     private ImageButton mapButton;
-    private TextView morada;
+    private TextView addressText;
     private Bitmap photo;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_beach);
 
-
         assignVariables();
+
+        //confirm button is set to disable to force users to complete the required fields before continuing
+        buttonCheck.setEnabled(false);
 
         //Click listener for the location button that opens the map activity when clicked
         mapButton.setOnClickListener(new View.OnClickListener() {
@@ -65,29 +64,7 @@ public class ReportBeach extends AppCompatActivity {
             }
         });
 
-        //Click listener for the confirm button that compresses the image selected and converts it to a byte array,
-        //and a new report is created with the information currently selected to add to the database.
-        //An async task is used to stored data in the database
-        buttonCheck.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-//                photo.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                Bitmap resizedBitmap = Bitmap.createScaledBitmap(photo, 1000, 1000, false);
-                resizedBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-
-                byte[] byteArray = stream.toByteArray();
-
-
-
-                finish();
-            }
-        });
-
-//Click listener to access the gallery of the phone. Permissions are requested before the access is allowed.
+        //Click listener to access the gallery of the phone. Permissions are requested before the access is allowed.
         buttonGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,6 +78,20 @@ public class ReportBeach extends AppCompatActivity {
             }
         });
 
+        //Click listener to access the camera of the phone. Permissions are requested before the access is allowed.
+        buttonCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ActivityCompat.checkSelfPermission(ReportBeach.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(ReportBeach.this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION);
+                    return;
+                }
+
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
+            }
+        });
+
     }
 
     /**
@@ -108,14 +99,20 @@ public class ReportBeach extends AppCompatActivity {
      */
     private void assignVariables() {
 
+
+        buttonCheck = findViewById(R.id.buttonCheck);
+
         buttonGallery = findViewById(R.id.buttonGallery);
+        buttonCamera = findViewById(R.id.buttonCamera);
+        mapButton = findViewById(R.id.settingsButton);
+
         selectedPhoto = findViewById(R.id.selectedPhoto);
         selectedPhoto.setVisibility(View.INVISIBLE);
-        morada = findViewById(R.id.morada);
+
+        addressText = findViewById(R.id.addressText);
 
 
     }
-
 
     /**
      * Method responsible for checking if there was a change made by the camera, gallery or maps activity.
@@ -123,14 +120,20 @@ public class ReportBeach extends AppCompatActivity {
      * In case of the camera activity the photo taken is placed on the image view and presented to the user.
      * In case of the gallery activity the image selected is decoded into a Bitmap and is the presented on the image view.
      * Finally if both the map address and the image have been selected the confirm button is set to enabled.
+     *
      * @param requestCode code used to identify the operation that took place
-     * @param resultCode indicator of weather the operation was successful or not
-     * @param data intent received from the previous activity
+     * @param resultCode  indicator of weather the operation was successful or not
+     * @param data        intent received from the previous activity
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-         if (requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK) {
+
+        if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
+            photo = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
+            selectedPhoto.setImageBitmap(photo);
+            selectedPhoto.setVisibility(View.VISIBLE);
+        } else if (requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK) {
             Uri selectedImage = Objects.requireNonNull(data.getData());
             String[] filePath = {MediaStore.Images.Media.DATA};
 
@@ -142,13 +145,11 @@ public class ReportBeach extends AppCompatActivity {
             cursor.close();
 
             photo = BitmapFactory.decodeFile(finalPath);
-             selectedPhoto.setImageBitmap(photo);
-             selectedPhoto.setVisibility(View.VISIBLE);
+            selectedPhoto.setImageBitmap(photo);
+            selectedPhoto.setVisibility(View.VISIBLE);
+        } else if (requestCode == MAP_REQUEST_CODE && resultCode == RESULT_OK) {
+            addressText.setText(data.getStringExtra("address"));
+            addressText.setVisibility(View.VISIBLE);
         }
-         else if (requestCode == MAP_REQUEST_CODE && resultCode == RESULT_OK) {
-             morada.setText(data.getStringExtra("address"));
-             morada.setVisibility(View.VISIBLE);
-
-
     }
 }

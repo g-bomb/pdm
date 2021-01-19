@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SettingsActivity"
-    android:background="@drawable/background3">
+    android:background="@drawable/gradient_background">
 
 
     <ImageButton
@@ -56,11 +56,11 @@
 
     <Button
         android:id="@+id/BackButton"
-        android:layout_width="107dp"
-        android:layout_height="54dp"
+        android:layout_width="125dp"
+        android:layout_height="50dp"
         android:layout_marginTop="84dp"
         android:text="@string/back"
-        app:backgroundTint="#0D47A1"
+        app:backgroundTint="#C20DA100"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/EnglishButton" />

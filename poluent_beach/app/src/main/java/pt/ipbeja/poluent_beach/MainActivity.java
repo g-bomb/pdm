@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        buttonSettings = findViewById(R.id.mapButton);
+        buttonSettings = findViewById(R.id.settingsButton);
         reportButton = findViewById(R.id.reportButton);
         showButton = findViewById(R.id.showButton);
 

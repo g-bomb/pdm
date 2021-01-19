@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background3">
+    android:background="@drawable/gradient_background">
 
     <Button
         android:id="@+id/showButton"
@@ -13,20 +13,26 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/show_beach"
+        android:textColorHighlight="#FFFFFF"
         android:textSize="15dp"
-        app:backgroundTint="#0D47A1"
+        app:backgroundTint="#C20DA100"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reportButton" />
+        app:layout_constraintTop_toBottomOf="@+id/reportButton"
+        app:layout_constraintVertical_bias="0.131" />
 
     <Button
         android:id="@+id/reportButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="84dp"
+        android:layout_marginTop="44dp"
         android:text="@string/report_beach"
+        android:textColor="#FBE8E8"
+        android:textColorHighlight="#FFFFFF"
+        android:textColorHint="#000000"
         android:textSize="15dp"
-        app:backgroundTint="#0D47A1"
+        app:backgroundTint="#C20DA100"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,8 +40,8 @@
 
     <ImageView
         android:id="@+id/iconApp"
-        android:layout_width="230dp"
-        android:layout_height="230dp"
+        android:layout_width="258dp"
+        android:layout_height="264dp"
         android:layout_marginTop="80dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -44,15 +50,19 @@
         app:srcCompat="@drawable/icon" />
 
     <ImageButton
-        android:id="@+id/mapButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:id="@+id/settingsButton"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:background="?attr/selectableItemBackgroundBorderless"
+        android:scaleType="fitStart"
         android:src="@drawable/ic_settings_black"
+        android:tint="#000000"
         app:layout_constraintBottom_toTopOf="@+id/iconApp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.925"
+        app:layout_constraintHorizontal_bias="0.956"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
