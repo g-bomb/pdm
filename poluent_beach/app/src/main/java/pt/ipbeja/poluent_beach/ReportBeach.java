@@ -56,13 +56,6 @@ public class ReportBeach extends AppCompatActivity {
         //confirm button is set to disable to force users to complete the required fields before continuing
         buttonCheck.setEnabled(false);
 
-        //Click listener for the location button that opens the map activity when clicked
-        mapButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivityForResult(new Intent(ReportBeach.this, MapsActivity.class), MAP_REQUEST_CODE);
-            }
-        });
 
         //Click listener to access the gallery of the phone. Permissions are requested before the access is allowed.
         buttonGallery.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +85,22 @@ public class ReportBeach extends AppCompatActivity {
             }
         });
 
+        //Click listener for the location button that opens the map activity when clicked
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(new Intent(ReportBeach.this, MapsActivity.class), MAP_REQUEST_CODE);
+            }
+        });
+
+        //Click listener to finish the activity
+        buttonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
     }
 
     /**
@@ -101,6 +110,7 @@ public class ReportBeach extends AppCompatActivity {
 
 
         buttonCheck = findViewById(R.id.buttonCheck);
+        buttonCancel = findViewById(R.id.buttonCancel);
 
         buttonGallery = findViewById(R.id.buttonGallery);
         buttonCamera = findViewById(R.id.buttonCamera);

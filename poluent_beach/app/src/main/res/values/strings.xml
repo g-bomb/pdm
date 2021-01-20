@@ -5,4 +5,13 @@
     <string name="choose_language">Escolher Idioma</string>
     <string name="back">Voltar</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_report_beach">Report de lixo</string>
+    <string name="textName">Nome da praia</string>
+    <string name="textDescription">O que encontrou?</string>
+    <string name="textLocal">Adicionar a localização</string>
+    <string name="textPhoto">Adicionar fotografia do lixo</string>
+    <string name="buttonCamera">Camera</string>
+    <string name="buttonGallery">Galeria</string>
+    <string name="buttonCancel">Cancelar</string>
+    <string name="buttonCheck">Confirmar</string>
 </resources>

@@ -5,4 +5,13 @@
     <string name="show_beach">View Reported Beaches</string>
     <string name="choose_language">Choose Language</string>
     <string name="back">Back</string>
+    <string name="title_report_beach">Report of trash</string>
+    <string name="textName">Beach name</string>
+    <string name="textDescription">What did you find?</string>
+    <string name="textPhoto">Add trash photo</string>
+    <string name="textLocal">Add location</string>
+    <string name="buttonCamera">Camera</string>
+    <string name="buttonGallery">Gallery</string>
+    <string name="buttonCancel">Cancel</string>
+    <string name="buttonCheck">Confirm</string>
 </resources>
