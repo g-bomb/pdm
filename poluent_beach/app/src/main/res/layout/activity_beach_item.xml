@@ -10,18 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/date"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            app:layout_constraintEnd_toEndOf="@+id/coordenadas"
-            app:layout_constraintStart_toStartOf="@+id/coordenadas"
-            app:layout_constraintTop_toBottomOf="@+id/coordenadas"
-            tools:text="@tools:sample/date/mmddyy" />
-
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/beach_image"
             android:layout_width="83dp"
             android:layout_height="89dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -31,30 +21,30 @@
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
-            android:id="@+id/beach_name"
-            android:layout_width="280dp"
-            android:layout_height="27dp"
+            android:id="@+id/report_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
-            android:text="TextView"
-            app:layout_constraintBottom_toTopOf="@+id/coordenadas"
+            app:layout_constraintBottom_toTopOf="@+id/report_description"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintStart_toEndOf="@+id/beach_image"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed"
             tools:text="@tools:sample/full_names" />
 
         <TextView
-            android:id="@+id/coordenadas"
+            android:id="@+id/report_description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
-            android:text="TextView"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toBottomOf="@+id/beach_name"
+            app:layout_constraintStart_toEndOf="@+id/beach_image"
+            app:layout_constraintTop_toBottomOf="@+id/report_name"
             tools:text="@tools:sample/us_zipcodes" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.cardview.widget.CardView>

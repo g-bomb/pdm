@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "812422621845",
+    "project_id": "beachreport",
+    "storage_bucket": "beachreport.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:812422621845:android:600e5800d3c5d08714c99c",
+        "android_client_info": {
+          "package_name": "pt.ipbeja.poluent_beach"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "812422621845-qpr3etcifv1fh2m94k1i18cn39102n2h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3hp2013mVXylz-8lQZZGLjRiNbEnEIg4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "812422621845-qpr3etcifv1fh2m94k1i18cn39102n2h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

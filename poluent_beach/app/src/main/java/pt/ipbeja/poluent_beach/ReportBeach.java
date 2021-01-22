@@ -19,7 +19,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.io.ByteArrayOutputStream;
 import java.util.Objects;
+
+import pt.ipbeja.poluent_beach.data.Report;
 
 public class ReportBeach extends AppCompatActivity {
 
@@ -51,10 +56,45 @@ public class ReportBeach extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_beach);
 
-        assignVariables();
+        Variables();
 
         //confirm button is set to disable to force users to complete the required fields before continuing
-        buttonCheck.setEnabled(false);
+        buttonCheck.setEnabled(true);
+
+        //Click listener for the confirm button that compresses the image selected and converts it to a byte array,
+        //and a new report is created with the information currently selected to add to the database.
+        //An async task is used to stored data in the database
+        buttonCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String name = editTextName.getText().toString();
+                String description = editTextLocal.getText().toString();
+
+                // Criar um objecto da class Report
+                Report report = new Report(name, description);
+
+                FirebaseFirestore.getInstance()
+                        .collection("reports")
+                        .add(report)
+                        .addOnSuccessListener(ReportBeach.this, documentReference -> finish());
+
+                /*ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                Bitmap resizedBitmap = Bitmap.createScaledBitmap(photo, 1000, 1000, false);
+                resizedBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+
+                byte[] byteArray = stream.toByteArray();
+
+
+                report.setImage(byteArray);
+                report.setLocation(showAddress.getText().toString());
+
+                new ReportActivity.AsyncTask().execute(report);*/
+
+                finish();
+            }
+        });
+
 
 
         //Click listener to access the gallery of the phone. Permissions are requested before the access is allowed.
@@ -106,22 +146,25 @@ public class ReportBeach extends AppCompatActivity {
     /**
      * Method that assigns all the variables to their respective layout elements
      */
-    private void assignVariables() {
+    private void Variables() {
 
+        textName = findViewById(R.id.textName);
+        textDescription = findViewById(R.id.textDescription);
+        editTextName = findViewById(R.id.editTextName);
+        editTextLocal = findViewById(R.id.editTextLocal);
+
+        buttonCamera = findViewById(R.id.buttonCamera);
+
+        buttonGallery = findViewById(R.id.buttonGallery);
+
+        selectedPhoto = findViewById(R.id.selectedPhoto);
+
+        selectedPhoto.setVisibility(View.INVISIBLE);
+        mapButton = findViewById(R.id.settingsButton);
+        addressText = findViewById(R.id.addressText);
 
         buttonCheck = findViewById(R.id.buttonCheck);
         buttonCancel = findViewById(R.id.buttonCancel);
-
-        buttonGallery = findViewById(R.id.buttonGallery);
-        buttonCamera = findViewById(R.id.buttonCamera);
-        mapButton = findViewById(R.id.settingsButton);
-
-        selectedPhoto = findViewById(R.id.selectedPhoto);
-        selectedPhoto.setVisibility(View.INVISIBLE);
-
-        addressText = findViewById(R.id.addressText);
-
-
     }
 
     /**
