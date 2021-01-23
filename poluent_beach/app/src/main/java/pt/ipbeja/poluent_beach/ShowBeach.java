@@ -9,7 +9,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
 
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -87,12 +89,14 @@ public class ShowBeach extends AppCompatActivity {
 
         private final TextView name;
         private final TextView description;
+        private final ImageView imagem;
         private Report report;
 
         public ReportViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.report_name);
             description = itemView.findViewById(R.id.report_description);
+            imagem = itemView.findViewById(R.id.beach_image);
 
             itemView.setOnClickListener(v -> {
             });

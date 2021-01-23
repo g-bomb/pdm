@@ -1,14 +1,12 @@
 package pt.ipbeja.poluent_beach;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -19,7 +17,18 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Objects;
@@ -51,6 +60,10 @@ public class ReportBeach extends AppCompatActivity {
     private TextView addressText;
     private Bitmap photo;
 
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,32 +81,78 @@ public class ReportBeach extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String name = editTextName.getText().toString();
-                String description = editTextLocal.getText().toString();
-
-                // Criar um objecto da class Report
-                Report report = new Report(name, description);
-
-                FirebaseFirestore.getInstance()
-                        .collection("reports")
-                        .add(report)
-                        .addOnSuccessListener(ReportBeach.this, documentReference -> finish());
-
                 /*ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 Bitmap resizedBitmap = Bitmap.createScaledBitmap(photo, 1000, 1000, false);
                 resizedBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] byteArray = stream.toByteArray();*/
 
-                byte[] byteArray = stream.toByteArray();
+
+                String name = editTextName.getText().toString();
+                String description = editTextLocal.getText().toString();
 
 
-                report.setImage(byteArray);
-                report.setLocation(showAddress.getText().toString());
 
-                new ReportActivity.AsyncTask().execute(report);*/
 
+
+
+                FirebaseStorage storage = FirebaseStorage.getInstance();
+
+                StorageReference storageRef = storage.getReferenceFromUrl("gs://beachreport.appspot.com/");
+                StorageReference imagesRef = storageRef.child(name + ".jpg");
+                StorageReference mountainImagesRef = storageRef.child("images/"+ name + ".jpg");
+
+
+                // Get the data from an ImageView as bytes
+                selectedPhoto.setDrawingCacheEnabled(true);
+                selectedPhoto.buildDrawingCache();
+                Bitmap bitmap = ((BitmapDrawable) selectedPhoto.getDrawable()).getBitmap();
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                byte[] data = baos.toByteArray();
+
+                UploadTask uploadTask = mountainImagesRef.putBytes(data);
+                uploadTask.addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle unsuccessful uploads
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                        // ...
+                    }
+                });
+
+                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess (UploadTask.TaskSnapshot taskSnapshot){
+                        taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(
+                                new OnCompleteListener<Uri>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Uri> task) {
+                                        if (task.isSuccessful())
+                                        {
+                                            String fileLink = task.getResult().toString();
+
+                                            // Criar um objecto da class Report
+                                            Report report = new Report(name, description, fileLink);
+                                            FirebaseFirestore.getInstance()
+                                                    .collection("reports")
+                                                    .add(report)
+                                                    .addOnSuccessListener(ReportBeach.this, documentReference -> finish());
+                                        }
+                                    }
+                                });
+
+                    }
+
+                });
                 finish();
             }
         });
+
+
 
 
 
@@ -143,6 +202,11 @@ public class ReportBeach extends AppCompatActivity {
 
     }
 
+    private void register()
+    {
+
+    }
+
     /**
      * Method that assigns all the variables to their respective layout elements
      */
@@ -165,6 +229,9 @@ public class ReportBeach extends AppCompatActivity {
 
         buttonCheck = findViewById(R.id.buttonCheck);
         buttonCancel = findViewById(R.id.buttonCancel);
+
+
+
     }
 
     /**
