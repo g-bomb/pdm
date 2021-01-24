@@ -31,8 +31,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivityForResult(new Intent(MainActivity.this, SettingsActivity.class), LANGUAGE_CODE);
+
             }
         });
+
 
         reportButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == LANGUAGE_CODE && resultCode == RESULT_OK) {
             Intent refresh = new Intent(this, MainActivity.class);
-            //finish();
+            finish();
             startActivity(refresh);
         }
 

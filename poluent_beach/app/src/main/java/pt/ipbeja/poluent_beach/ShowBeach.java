@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -25,11 +27,14 @@ public class ShowBeach extends AppCompatActivity {
 
     private ReportAdapter adapter;
 
+    private List<String> test1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_beach);
 
+        this.test1 = new ArrayList<>();
 
         RecyclerView list = findViewById(R.id.report_list);
 
@@ -89,14 +94,16 @@ public class ShowBeach extends AppCompatActivity {
 
         private final TextView name;
         private final TextView description;
-        private final ImageView imagem;
+        private final TextView gps;
+        private final ImageView praia;
         private Report report;
 
         public ReportViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.report_name);
             description = itemView.findViewById(R.id.report_description);
-            imagem = itemView.findViewById(R.id.beach_image);
+            gps = itemView.findViewById(R.id.report_gps);
+            praia = itemView.findViewById(R.id.beach_image);
 
             itemView.setOnClickListener(v -> {
             });
@@ -106,6 +113,10 @@ public class ShowBeach extends AppCompatActivity {
             this.report = report;
             name.setText(report.getName());
             description.setText(report.getDescription());
+            gps.setText(report.getGps());
+            Glide.with(getApplicationContext()).load(report.getFileLink()).into(praia);
+
+
         }
 
     }

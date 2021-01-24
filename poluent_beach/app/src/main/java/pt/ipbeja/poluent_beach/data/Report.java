@@ -5,15 +5,16 @@ import com.google.firebase.firestore.Exclude;
 public class Report {
     private String name;
     private String description;
-    private String firestoreId;
     private String fileLink;
+    private String gps;
     public Report (){
 
     }
 
-    public Report(String name, String description, String fileLink ){
+    public Report(String name, String description, String gps, String fileLink ){
         this.name = name;
         this.description = description;
+        this.gps = gps;
         this.fileLink = fileLink;
     }
 
@@ -24,6 +25,10 @@ public class Report {
 
     public String getDescription() {
         return description;
+    }
+
+    public String getGps() {
+        return gps;
     }
 
     public String getFileLink() {

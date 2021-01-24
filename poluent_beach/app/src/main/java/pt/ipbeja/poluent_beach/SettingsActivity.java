@@ -10,7 +10,9 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
+import java.sql.SQLOutput;
 import java.util.Locale;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -21,6 +23,8 @@ public class SettingsActivity extends AppCompatActivity {
     private ImageButton buttonEN;
     private Button buttonBack;
     private Locale myLocale;
+    private int counter;
+    private int counter1;
 
     /**
      * Oncreate method tha runs when the activity is launched
@@ -46,6 +50,7 @@ public class SettingsActivity extends AppCompatActivity {
                 resources.updateConfiguration(configuration, metrics);
                 setResult(LANGUAGE_CHANGE);
                 recreate();
+
             }
         });
 
@@ -68,8 +73,10 @@ public class SettingsActivity extends AppCompatActivity {
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
-            }
+                    Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
+                    finish();
+                startActivity(intent);
+                }
         });
     }
 }

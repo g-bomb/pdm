@@ -60,10 +60,6 @@ public class ReportBeach extends AppCompatActivity {
     private TextView addressText;
     private Bitmap photo;
 
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +68,7 @@ public class ReportBeach extends AppCompatActivity {
         Variables();
 
         //confirm button is set to disable to force users to complete the required fields before continuing
-        buttonCheck.setEnabled(true);
+        buttonCheck.setEnabled(false);
 
         //Click listener for the confirm button that compresses the image selected and converts it to a byte array,
         //and a new report is created with the information currently selected to add to the database.
@@ -81,26 +77,15 @@ public class ReportBeach extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                /*ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                Bitmap resizedBitmap = Bitmap.createScaledBitmap(photo, 1000, 1000, false);
-                resizedBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                byte[] byteArray = stream.toByteArray();*/
-
-
                 String name = editTextName.getText().toString();
                 String description = editTextLocal.getText().toString();
-
-
-
-
-
+                String gps = addressText.getText().toString();
 
                 FirebaseStorage storage = FirebaseStorage.getInstance();
 
-                StorageReference storageRef = storage.getReferenceFromUrl("gs://beachreport.appspot.com/");
-                StorageReference imagesRef = storageRef.child(name + ".jpg");
-                StorageReference mountainImagesRef = storageRef.child("images/"+ name + ".jpg");
-
+                StorageReference storageRef = storage.getReference();
+                //StorageReference imagesRef = storageRef.child(name + ".jpg");
+                StorageReference imagesRef = storageRef.child("images/"+ name + ".jpg");
 
                 // Get the data from an ImageView as bytes
                 selectedPhoto.setDrawingCacheEnabled(true);
@@ -110,7 +95,7 @@ public class ReportBeach extends AppCompatActivity {
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                 byte[] data = baos.toByteArray();
 
-                UploadTask uploadTask = mountainImagesRef.putBytes(data);
+                UploadTask uploadTask = imagesRef.putBytes(data);
                 uploadTask.addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
@@ -136,7 +121,7 @@ public class ReportBeach extends AppCompatActivity {
                                             String fileLink = task.getResult().toString();
 
                                             // Criar um objecto da class Report
-                                            Report report = new Report(name, description, fileLink);
+                                            Report report = new Report(name, description, gps, fileLink);
                                             FirebaseFirestore.getInstance()
                                                     .collection("reports")
                                                     .add(report)
@@ -151,10 +136,6 @@ public class ReportBeach extends AppCompatActivity {
                 finish();
             }
         });
-
-
-
-
 
         //Click listener to access the gallery of the phone. Permissions are requested before the access is allowed.
         buttonGallery.setOnClickListener(new View.OnClickListener() {
@@ -202,11 +183,6 @@ public class ReportBeach extends AppCompatActivity {
 
     }
 
-    private void register()
-    {
-
-    }
-
     /**
      * Method that assigns all the variables to their respective layout elements
      */
@@ -229,9 +205,6 @@ public class ReportBeach extends AppCompatActivity {
 
         buttonCheck = findViewById(R.id.buttonCheck);
         buttonCancel = findViewById(R.id.buttonCancel);
-
-
-
     }
 
     /**
@@ -268,8 +241,14 @@ public class ReportBeach extends AppCompatActivity {
             selectedPhoto.setImageBitmap(photo);
             selectedPhoto.setVisibility(View.VISIBLE);
         } else if (requestCode == MAP_REQUEST_CODE && resultCode == RESULT_OK) {
-            addressText.setText(data.getStringExtra("address"));
+            String gps = data.getStringExtra("lat") + data.getStringExtra("log");
+            addressText.setText(gps);
             addressText.setVisibility(View.VISIBLE);
         }
+        if (selectedPhoto.getDrawable()!=null && !addressText.getText().toString().equals("")) {
+            buttonCheck.setEnabled(true);
+        }
+
     }
+
 }
