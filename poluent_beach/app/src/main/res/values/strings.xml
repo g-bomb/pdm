@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">Clean My Beach</string>
     <string name="report_beach">Reportar Praia</string>
-    <string name="show_beach">Ver Praias Reportadas</string>
+    <string name="show_beach" translatable="false">Ver Praias Reportadas</string>
     <string name="choose_language">Escolher Idioma</string>
     <string name="back">Voltar</string>
     <string name="title_activity_maps">Map</string>
@@ -17,4 +17,9 @@
     <string name="confirm_map">Confirmar</string>
     <string name="cancel_map">Cancelar</string>
     <string name="report_list">Lista de Reports</string>
+    <string name="Description_history">Descrição</string>
+    <string name="Location_history">Localização</string>
+    <string name="Back_button_history">Voltar</string>
+    <string name="Delete_Report_history">Apagar Report</string>
+    <string name="title_activity_maps_history">Map</string>
 </resources>

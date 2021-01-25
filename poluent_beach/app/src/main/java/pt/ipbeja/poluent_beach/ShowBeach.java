@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,7 +32,7 @@ import pt.ipbeja.poluent_beach.data.Report;
 public class ShowBeach extends AppCompatActivity {
 
     private ReportAdapter adapter;
-
+    private Button backButton;
     private List<String> test1;
 
     @Override
@@ -42,12 +43,21 @@ public class ShowBeach extends AppCompatActivity {
         //this.test1 = new ArrayList<>();
 
         RecyclerView list = findViewById(R.id.report_list);
+        backButton = findViewById(R.id.button_back_list);
+
 
         RecyclerView.LayoutManager lm = new LinearLayoutManager(this);
         this.adapter = new ReportAdapter();
 
         list.setLayoutManager(lm);
         list.setAdapter(adapter);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ShowBeach.this, MainActivity.class));
+            }
+        });
 
     }
 
@@ -124,18 +134,15 @@ public class ShowBeach extends AppCompatActivity {
             gps = itemView.findViewById(R.id.report_gps);
             praia = itemView.findViewById(R.id.beach_image);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String sdds = returnID(getAdapterPosition());
-                    Intent position = new Intent(v.getContext(), BeachHistory.class);
-                    position.putExtra("name", report.getName());
-                    position.putExtra("description", report.getDescription());
-                    position.putExtra("gps", report.getGps());
-                    position.putExtra("photo", report.getFileLink());
-                    position.putExtra("id", sdds);
-                    v.getContext().startActivity(position);
-                }
+            itemView.setOnClickListener(v -> {
+                String stringId = returnID(getAdapterPosition());
+                Intent position = new Intent(v.getContext(), BeachHistory.class);
+                position.putExtra("name", report.getName());
+                position.putExtra("description", report.getDescription());
+                position.putExtra("gps", report.getGps());
+                position.putExtra("photo", report.getFileLink());
+                position.putExtra("id", stringId);
+                v.getContext().startActivity(position);
             });
         }
 
@@ -152,5 +159,4 @@ public class ShowBeach extends AppCompatActivity {
     private String returnID(int adapterPosition) {
         return this.test1.get(adapterPosition);
     }
-
 }

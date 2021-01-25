@@ -61,7 +61,7 @@ public class BeachHistory extends AppCompatActivity {
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(BeachHistory.this, MainActivity.class));
+                startActivity(new Intent(BeachHistory.this, MapsActivityHistory.class).putExtra("gps", gpsText.getText().toString()));
             }
         });
 

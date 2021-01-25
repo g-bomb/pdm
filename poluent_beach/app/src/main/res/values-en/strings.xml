@@ -16,4 +16,8 @@
     <string name="confirm_map">Confirm</string>
     <string name="cancel_map">Cancel</string>
     <string name="report_list">Reports List</string>
+    <string name="Description_history">Description</string>
+    <string name="Location_history">Location</string>
+    <string name="Delete_Report_history">Delete Report</string>
+    <string name="Back_button_history">Back</string>
 </resources>
