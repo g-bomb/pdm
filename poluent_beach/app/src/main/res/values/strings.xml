@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">poluent_beach</string>
+    <string name="app_name" translatable="false">Clean My Beach</string>
     <string name="report_beach">Reportar Praia</string>
     <string name="show_beach">Ver Praias Reportadas</string>
     <string name="choose_language">Escolher Idioma</string>
@@ -14,4 +14,7 @@
     <string name="buttonGallery">Galeria</string>
     <string name="buttonCancel">Cancelar</string>
     <string name="buttonCheck">Confirmar</string>
+    <string name="confirm_map">Confirmar</string>
+    <string name="cancel_map">Cancelar</string>
+    <string name="report_list">Lista de Reports</string>
 </resources>

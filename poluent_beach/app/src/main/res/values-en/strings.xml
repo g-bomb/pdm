@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">poluent_beach</string>
     <string name="report_beach">Report Beach</string>
     <string name="show_beach">View Reported Beaches</string>
     <string name="choose_language">Choose Language</string>
@@ -14,4 +13,7 @@
     <string name="buttonGallery">Gallery</string>
     <string name="buttonCancel">Cancel</string>
     <string name="buttonCheck">Confirm</string>
+    <string name="confirm_map">Confirm</string>
+    <string name="cancel_map">Cancel</string>
+    <string name="report_list">Reports List</string>
 </resources>

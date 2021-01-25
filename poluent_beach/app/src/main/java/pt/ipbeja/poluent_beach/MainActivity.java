@@ -62,9 +62,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == LANGUAGE_CODE && resultCode == RESULT_OK) {
-            Intent refresh = new Intent(this, MainActivity.class);
-            finish();
-            startActivity(refresh);
+            //Intent refresh = new Intent(this, MainActivity.class);
+            //finish();
+            //startActivity(getIntent());
+            recreate();
         }
 
     }

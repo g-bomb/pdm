@@ -2,8 +2,117 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
     tools:context=".BeachHistory">
 
+
+    <ImageView
+        android:id="@+id/photo_report_history"
+        android:layout_width="193dp"
+        android:layout_height="185dp"
+        app:layout_constraintBottom_toTopOf="@+id/description_history"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/beach_name_history"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/beach_name_history"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="25dp"
+        app:layout_constraintBottom_toTopOf="@+id/photo_report_history"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="sdsdsdsds" />
+
+    <TextView
+        android:id="@+id/description_history"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="descricao"
+        app:layout_constraintBottom_toTopOf="@+id/description_text_history"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.11"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/photo_report_history"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/description_text_history"
+        android:layout_width="229dp"
+        android:layout_height="50dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/gps_history"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.45"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/description_history"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/gps_history"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Localizacao"
+        app:layout_constraintBottom_toTopOf="@+id/gps_text_history"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.12"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/description_text_history"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/gps_text_history"
+        android:layout_width="120dp"
+        android:layout_height="56dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/button_cancel_history"
+        app:layout_constraintEnd_toStartOf="@+id/show_map_history"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gps_history" />
+
+    <ImageButton
+        android:id="@+id/show_map_history"
+        android:layout_width="70dp"
+        android:layout_height="62dp"
+        android:layout_marginBottom="44dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/button_cancel_history"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/gps_text_history"
+        app:srcCompat="@drawable/add_location" />
+
+    <Button
+        android:id="@+id/button_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:text="Apagar Report"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/button_cancel_history"
+        app:layout_constraintTop_toBottomOf="@+id/gps_text_history"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/button_cancel_history"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="cancelar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_delete"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gps_text_history" />
 </androidx.constraintlayout.widget.ConstraintLayout>

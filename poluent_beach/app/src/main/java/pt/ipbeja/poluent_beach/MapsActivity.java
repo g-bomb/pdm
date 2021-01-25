@@ -60,9 +60,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                confirmButton.setVisibility(View.INVISIBLE);
+               /* confirmButton.setVisibility(View.INVISIBLE);
                 cancelButton.setVisibility(View.INVISIBLE);
-                mMap.clear();
+                mMap.clear();*/
+                finish();
             }
         });
 
@@ -130,8 +131,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 mMap.clear();
                 coordinates(latLng);
 
-                mMap.addMarker(new MarkerOptions().position(latLng).title(address));
-                cancelButton.setVisibility(View.VISIBLE);
+                mMap.addMarker(new MarkerOptions().position(latLng));
+               //cancelButton.setVisibility(View.VISIBLE);
                 confirmButton.setVisibility(View.VISIBLE);
             }
         });
