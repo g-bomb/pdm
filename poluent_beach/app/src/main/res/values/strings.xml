@@ -22,4 +22,6 @@
     <string name="Back_button_history">Voltar</string>
     <string name="Delete_Report_history">Apagar Report</string>
     <string name="title_activity_maps_history">Map</string>
+    <string name="dao_reports">Ver Reports Locais</string>
+    <string name="dao_report_textq">teste1</string>
 </resources>

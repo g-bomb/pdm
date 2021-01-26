@@ -1,6 +1,7 @@
 package pt.ipbeja.poluent_beach;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,81 +15,51 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import com.bumptech.glide.Glide;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import pt.ipbeja.poluent_beach.data.Report;
+import pt.ipbeja.poluent_beach.data.database.ReportDatabase;
 
-public class ShowBeach extends AppCompatActivity {
+public class ShowBeachDao extends AppCompatActivity {
 
-    private ReportAdapter adapter;
+    private ShowBeachDao.ReportAdapter adapter;
     private Button backButton;
-    private List<String> test1;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_beach);
 
-        //this.test1 = new ArrayList<>();
-
-        RecyclerView list = findViewById(R.id.report_list);
+       this.recyclerView = findViewById(R.id.report_list);
         backButton = findViewById(R.id.button_back_list);
 
-
         RecyclerView.LayoutManager lm = new LinearLayoutManager(this);
-        this.adapter = new ReportAdapter();
+        this.adapter = new ShowBeachDao.ReportAdapter();
+        this.recyclerView.setLayoutManager(lm);
+        this.recyclerView.setAdapter(adapter);
 
-        list.setLayoutManager(lm);
-        list.setAdapter(adapter);
-
-        backButton.setOnClickListener(v -> startActivity(new Intent(ShowBeach.this, MainActivity.class)));
+        backButton.setOnClickListener(v -> startActivity(new Intent(ShowBeachDao.this, MainActivity.class)));
 
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("reports")
-                .addSnapshotListener(this, (value, error) -> {
-                    if (error == null) {
-                        List<Report> reports = value.toObjects(Report.class);
-                        adapter.setData(reports);
-                    }
-                });
-        refreshInfo();
-        /*refreshData();*/
+        refreshData();
     }
 
-    private void refreshInfo()
-    {
-        this.test1 = new ArrayList<>();
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("reports")
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            this.test1.add(document.getId());
-                        }
-                    }
-                });
-    }
-
-    /*private void refreshData() {
+    private void refreshData() {
         List<Report> reports = ReportDatabase.getInstance(getApplicationContext())
                 .reportDao()
                 .getAll();
         adapter.setData(reports);
-    }*/
+    }
 
-    public class ReportAdapter extends RecyclerView.Adapter<ReportViewHolder> {
+    public class ReportAdapter extends RecyclerView.Adapter<ShowBeachDao.ReportViewHolder> {
 
         private List<Report> data = new ArrayList<>();
 
@@ -99,9 +70,9 @@ public class ShowBeach extends AppCompatActivity {
 
         @NonNull
         @Override
-        public ReportViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        public ShowBeachDao.ReportViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_beach_item, parent, false);
-            return new ReportViewHolder(view);
+            return new ShowBeachDao.ReportViewHolder(view);
         }
 
         @Override
@@ -131,15 +102,18 @@ public class ShowBeach extends AppCompatActivity {
             gps = itemView.findViewById(R.id.report_gps);
             praia = itemView.findViewById(R.id.beach_image);
 
-            itemView.setOnClickListener(v -> {
-                String stringId = returnID(getAdapterPosition());
-                Intent position = new Intent(v.getContext(), BeachHistory.class);
-                position.putExtra("name", report.getName());
-                position.putExtra("description", report.getDescription());
-                position.putExtra("gps", report.getGps());
-                position.putExtra("photo", report.getFileLink());
-                position.putExtra("id", stringId);
-                v.getContext().startActivity(position);
+            itemView.setOnLongClickListener(v -> {
+                new AlertDialog.Builder(ShowBeachDao.this)
+                        .setTitle("Apagar")
+                        .setMessage("Pretende apagar " + report.getName() + "?")
+                        .setPositiveButton("Apagar", (dialog, which) -> {
+                            ReportDatabase.getInstance(getApplicationContext())
+                                    .reportDao()
+                                    .delete(report);
+                            refreshData();
+                        })
+                        .show();
+                return true;
             });
         }
 
@@ -149,11 +123,7 @@ public class ShowBeach extends AppCompatActivity {
             description.setText(report.getDescription());
             gps.setText(report.getGps());
             Glide.with(getApplicationContext()).load(report.getFileLink()).into(praia);
+
         }
-
-    }
-
-    private String returnID(int adapterPosition) {
-        return this.test1.get(adapterPosition);
     }
 }

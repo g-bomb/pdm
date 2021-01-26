@@ -5,12 +5,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ShowBeach"
+    tools:context=".ShowBeachDao"
     android:background="@drawable/gradient_background">
 
 
     <TextView
-        android:id="@+id/title_report"
+        android:id="@+id/title_report_dao"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -20,13 +20,13 @@
         android:text="@string/report_list"
         android:textColor="#000000"
         android:textSize="25dp"
-        app:layout_constraintBottom_toTopOf="@+id/report_list"
+        app:layout_constraintBottom_toTopOf="@+id/report_list_dao"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/report_list"
+        android:id="@+id/report_list_dao"
         android:layout_width="408dp"
         android:layout_height="593dp"
         android:layout_alignParentEnd="true"
@@ -46,18 +46,18 @@
     </androidx.recyclerview.widget.RecyclerView>
 
     <Button
-        android:id="@+id/button_back_list"
+        android:id="@+id/button_back_list_dao"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="@string/back"
+        android:text="@string/Back_button_history"
         android:textColor="#FFFFFF"
         app:backgroundTint="#C20DA100"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/report_list"
+        app:layout_constraintTop_toBottomOf="@+id/report_list_dao"
         app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

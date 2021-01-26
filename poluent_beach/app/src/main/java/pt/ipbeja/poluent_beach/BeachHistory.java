@@ -77,8 +77,8 @@ public class BeachHistory extends AppCompatActivity {
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String ddd = getIntent().getStringExtra("id");
-                FirebaseFirestore.getInstance().collection("reports").document(ddd).delete();
+                String idString = getIntent().getStringExtra("id");
+                FirebaseFirestore.getInstance().collection("reports").document(idString).delete();
                 finish();
             }
         });

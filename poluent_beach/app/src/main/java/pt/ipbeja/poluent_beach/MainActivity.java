@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton buttonSettings;
     private Button reportButton;
     private Button showButton;
+    private  Button showDaoButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,30 +26,17 @@ public class MainActivity extends AppCompatActivity {
         buttonSettings = findViewById(R.id.settingsButton);
         reportButton = findViewById(R.id.reportButton);
         showButton = findViewById(R.id.showButton);
+        showDaoButton = findViewById(R.id.showDaoButton);
+
 
         //Click listeneres for all the buttons, the settings button starts activity for result to inform if there was a language change.
-        buttonSettings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivityForResult(new Intent(MainActivity.this, SettingsActivity.class), LANGUAGE_CODE);
+        buttonSettings.setOnClickListener(v -> startActivityForResult(new Intent(MainActivity.this, SettingsActivity.class), LANGUAGE_CODE));
 
-            }
-        });
+        reportButton.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, ReportBeach.class)));
 
+        showButton.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, ShowBeach.class)));
 
-        reportButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, ReportBeach.class));
-            }
-        });
-
-        showButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, ShowBeach.class));
-            }
-        });
+        showDaoButton.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, ShowBeachDao.class)));
     }
 
     /**

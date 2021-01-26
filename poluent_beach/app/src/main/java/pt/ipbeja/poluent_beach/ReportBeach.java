@@ -34,6 +34,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.Objects;
 
 import pt.ipbeja.poluent_beach.data.Report;
+import pt.ipbeja.poluent_beach.data.database.ReportDatabase;
 
 public class ReportBeach extends AppCompatActivity {
 
@@ -120,18 +121,26 @@ public class ReportBeach extends AppCompatActivity {
                                         {
                                             String fileLink = task.getResult().toString();
 
-                                            // Criar um objecto da class Report
+                                            // Criar um objecto da class Report --- FireBase
                                             Report report = new Report(name, description, gps, fileLink);
                                             FirebaseFirestore.getInstance()
                                                     .collection("reports")
                                                     .add(report)
                                                     .addOnSuccessListener(ReportBeach.this, documentReference -> finish());
+
+
+                                            // Criar um objecto da class Report --- Room
+                                            Report report1 = new Report(0, name, description, gps, fileLink);
+                                            // E pedir ao DAO que o insira na BD
+                                            ReportDatabase
+                                                    .getInstance(getApplicationContext())
+                                                    .reportDao()
+                                                    .insert(report1);
                                         }
                                     }
                                 });
 
                     }
-
                 });
                 finish();
             }
@@ -180,6 +189,11 @@ public class ReportBeach extends AppCompatActivity {
                 finish();
             }
         });
+
+    }
+
+    private void basedadosdao(String name, String description, String gps, String fileLink ){
+
 
     }
 
