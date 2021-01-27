@@ -35,11 +35,8 @@ public class ShowBeach extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_beach);
 
-        //this.test1 = new ArrayList<>();
-
         RecyclerView list = findViewById(R.id.report_list);
         backButton = findViewById(R.id.button_back_list);
-
 
         RecyclerView.LayoutManager lm = new LinearLayoutManager(this);
         this.adapter = new ReportAdapter();
@@ -47,8 +44,7 @@ public class ShowBeach extends AppCompatActivity {
         list.setLayoutManager(lm);
         list.setAdapter(adapter);
 
-        backButton.setOnClickListener(v -> startActivity(new Intent(ShowBeach.this, MainActivity.class)));
-
+        backButton.setOnClickListener(v -> finish());
     }
 
     @Override
@@ -63,8 +59,8 @@ public class ShowBeach extends AppCompatActivity {
                     }
                 });
         refreshInfo();
-        /*refreshData();*/
     }
+
 
     private void refreshInfo()
     {
@@ -80,13 +76,6 @@ public class ShowBeach extends AppCompatActivity {
                     }
                 });
     }
-
-    /*private void refreshData() {
-        List<Report> reports = ReportDatabase.getInstance(getApplicationContext())
-                .reportDao()
-                .getAll();
-        adapter.setData(reports);
-    }*/
 
     public class ReportAdapter extends RecyclerView.Adapter<ReportViewHolder> {
 

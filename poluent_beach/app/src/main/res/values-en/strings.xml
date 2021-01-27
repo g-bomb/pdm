@@ -21,4 +21,6 @@
     <string name="Delete_Report_history">Delete Report</string>
     <string name="Back_button_history">Back</string>
     <string name="dao_reports">View Local Reports</string>
+    <string name="dialog_box_text1">Delete</string>
+    <string name="dialog_box_text2">Do you want to delete this report?</string>
 </resources>

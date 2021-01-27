@@ -42,7 +42,7 @@ public class ShowBeachDao extends AppCompatActivity {
         this.recyclerView.setLayoutManager(lm);
         this.recyclerView.setAdapter(adapter);
 
-        backButton.setOnClickListener(v -> startActivity(new Intent(ShowBeachDao.this, MainActivity.class)));
+        backButton.setOnClickListener(v -> finish());
 
     }
 
@@ -104,9 +104,9 @@ public class ShowBeachDao extends AppCompatActivity {
 
             itemView.setOnLongClickListener(v -> {
                 new AlertDialog.Builder(ShowBeachDao.this)
-                        .setTitle("Apagar")
-                        .setMessage("Pretende apagar " + report.getName() + "?")
-                        .setPositiveButton("Apagar", (dialog, which) -> {
+                        .setTitle(report.getName())
+                        .setMessage(R.string.dialog_box_text2)
+                        .setPositiveButton(R.string.dialog_box_text1, (dialog, which) -> {
                             ReportDatabase.getInstance(getApplicationContext())
                                     .reportDao()
                                     .delete(report);

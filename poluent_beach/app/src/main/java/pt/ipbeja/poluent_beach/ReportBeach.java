@@ -110,38 +110,32 @@ public class ReportBeach extends AppCompatActivity {
                     }
                 });
 
-                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess (UploadTask.TaskSnapshot taskSnapshot){
-                        taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(
-                                new OnCompleteListener<Uri>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Uri> task) {
-                                        if (task.isSuccessful())
-                                        {
-                                            String fileLink = task.getResult().toString();
+                uploadTask.addOnSuccessListener(taskSnapshot -> taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(
+                        new OnCompleteListener<Uri>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Uri> task) {
+                                if (task.isSuccessful())
+                                {
+                                    String fileLink = task.getResult().toString();
 
-                                            // Criar um objecto da class Report --- FireBase
-                                            Report report = new Report(name, description, gps, fileLink);
-                                            FirebaseFirestore.getInstance()
-                                                    .collection("reports")
-                                                    .add(report)
-                                                    .addOnSuccessListener(ReportBeach.this, documentReference -> finish());
+                                    // Criar um objecto da class Report --- FireBase
+                                    Report report = new Report(name, description, gps, fileLink);
+                                    FirebaseFirestore.getInstance()
+                                            .collection("reports")
+                                            .add(report)
+                                            .addOnSuccessListener(ReportBeach.this, documentReference -> finish());
 
 
-                                            // Criar um objecto da class Report --- Room
-                                            Report report1 = new Report(0, name, description, gps, fileLink);
-                                            // E pedir ao DAO que o insira na BD
-                                            ReportDatabase
-                                                    .getInstance(getApplicationContext())
-                                                    .reportDao()
-                                                    .insert(report1);
-                                        }
-                                    }
-                                });
-
-                    }
-                });
+                                    // Criar um objecto da class Report --- Room
+                                    Report report1 = new Report(0, name, description, gps, fileLink);
+                                    // E pedir ao DAO que o insira na BD
+                                    ReportDatabase
+                                            .getInstance(getApplicationContext())
+                                            .reportDao()
+                                            .insert(report1);
+                                }
+                            }
+                        }));
                 finish();
             }
         });

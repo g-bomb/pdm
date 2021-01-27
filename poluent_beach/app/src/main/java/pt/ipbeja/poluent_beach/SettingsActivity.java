@@ -39,44 +39,35 @@ public class SettingsActivity extends AppCompatActivity {
         buttonBack = findViewById(R.id.BackButton);
 
         //Click listener for both the language buttons, that changes the configuration locale to the corresponding language
-        buttonPT.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myLocale = new Locale("pt");
-                Resources resources = getResources();
-                DisplayMetrics metrics = resources.getDisplayMetrics();
-                Configuration configuration = resources.getConfiguration();
-                configuration.locale = myLocale;
-                resources.updateConfiguration(configuration, metrics);
-                setResult(LANGUAGE_CHANGE);
-                recreate();
+        buttonPT.setOnClickListener(v -> {
+            myLocale = new Locale("pt");
+            Resources resources = getResources();
+            DisplayMetrics metrics = resources.getDisplayMetrics();
+            Configuration configuration = resources.getConfiguration();
+            configuration.locale = myLocale;
+            resources.updateConfiguration(configuration, metrics);
+            setResult(LANGUAGE_CHANGE);
+            recreate();
 
-            }
         });
 
-        buttonEN.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myLocale = new Locale("en");
-                Resources resources = getResources();
-                DisplayMetrics metrics = resources.getDisplayMetrics();
-                Configuration configuration = resources.getConfiguration();
-                configuration.locale = myLocale;
-                resources.updateConfiguration(configuration, metrics);
-                setResult(LANGUAGE_CHANGE);
-                recreate();
+        buttonEN.setOnClickListener(v -> {
+            myLocale = new Locale("en");
+            Resources resources = getResources();
+            DisplayMetrics metrics = resources.getDisplayMetrics();
+            Configuration configuration = resources.getConfiguration();
+            configuration.locale = myLocale;
+            resources.updateConfiguration(configuration, metrics);
+            setResult(LANGUAGE_CHANGE);
+            recreate();
 
-            }
         });
 
         //Click listener to finish the activity
-        buttonBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                    Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
-                    finish();
-                startActivity(intent);
-                }
-        });
+        buttonBack.setOnClickListener(v -> {
+                Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
+                finish();
+            startActivity(intent);
+            });
     }
 }

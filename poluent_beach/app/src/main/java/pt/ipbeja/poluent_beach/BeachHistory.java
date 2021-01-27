@@ -58,29 +58,16 @@ public class BeachHistory extends AppCompatActivity {
 
 
         //Button to see the location on the map, the address string is passed on the intent.
-        mapButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(BeachHistory.this, MapsActivityHistory.class).putExtra("gps", gpsText.getText().toString()));
-            }
-        });
+        mapButton.setOnClickListener(v -> startActivity(new Intent(BeachHistory.this, MapsActivityHistory.class).putExtra("gps", gpsText.getText().toString())));
 
         //Click listener to finish the activity
-        buttonBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        buttonBack.setOnClickListener(v -> finish());
 
         //Click listener to "claim" the pet, this will remove the current report from the database
-        buttonDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String idString = getIntent().getStringExtra("id");
-                FirebaseFirestore.getInstance().collection("reports").document(idString).delete();
-                finish();
-            }
+        buttonDelete.setOnClickListener(v -> {
+            String idString = getIntent().getStringExtra("id");
+            FirebaseFirestore.getInstance().collection("reports").document(idString).delete();
+            finish();
         });
     }
 

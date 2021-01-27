@@ -38,7 +38,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Location currentLocation;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private static final int LOCATION_PERMISSION = 101;
-    private Button cancelButton;
     private Button confirmButton;
     private Geocoder geocoder;
     private List<Address> addresses;
@@ -55,19 +54,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-
-        cancelButton = findViewById(R.id.cancelMap);
         confirmButton = findViewById(R.id.confirmMap);
-
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               /* confirmButton.setVisibility(View.INVISIBLE);
-                cancelButton.setVisibility(View.INVISIBLE);
-                mMap.clear();*/
-                finish();
-            }
-        });
 
         confirmButton.setOnClickListener(v -> {
             Intent prevIntent = getIntent();
@@ -92,17 +79,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             return;
         }
         Task<Location> task = fusedLocationProviderClient.getLastLocation();
-        task.addOnSuccessListener(new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                if (location != null) {
-                    currentLocation = location;
-                    SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-                    supportMapFragment.getMapAsync(MapsActivity.this);
-                    LatLng place = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(place));
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(place, 15));
-                }
+        task.addOnSuccessListener(location -> {
+            if (location != null) {
+                currentLocation = location;
+                SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+                supportMapFragment.getMapAsync(MapsActivity.this);
+                LatLng place = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(place));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(place, 15));
             }
         });
     }
@@ -134,7 +118,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 coordinates(latLng);
 
                 mMap.addMarker(new MarkerOptions().position(latLng));
-               //cancelButton.setVisibility(View.VISIBLE);
                 confirmButton.setVisibility(View.VISIBLE);
             }
         });

@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     private Button reportButton;
     private Button showButton;
     private  Button showDaoButton;
+    private ShowBeach showBeach;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
