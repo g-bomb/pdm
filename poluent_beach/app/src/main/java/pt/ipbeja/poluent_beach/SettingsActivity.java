@@ -23,8 +23,6 @@ public class SettingsActivity extends AppCompatActivity {
     private ImageButton buttonEN;
     private Button buttonBack;
     private Locale myLocale;
-    private int counter;
-    private int counter1;
 
     /**
      * Oncreate method tha runs when the activity is launched
@@ -63,11 +61,11 @@ public class SettingsActivity extends AppCompatActivity {
 
         });
 
-        //Click listener to finish the activity
+        //Click listener to finish the activity, and start new MainActivity
         buttonBack.setOnClickListener(v -> {
-                Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
+             Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
                 finish();
-            startActivity(intent);
+          startActivity(intent);
             });
     }
 }

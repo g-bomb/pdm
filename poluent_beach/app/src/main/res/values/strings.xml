@@ -22,7 +22,7 @@
     <string name="Back_button_history">Voltar</string>
     <string name="Delete_Report_history">Apagar Report</string>
     <string name="title_activity_maps_history" translatable="false">Map</string>
-    <string name="dao_reports">Ver Reports Locais</string>
+    <string name="dao_reports">Ver meus Reports</string>
     <string name="dialog_box_text1">Apagar</string>
     <string name="dialog_box_text2">Pretende apagar este report?</string>
 </resources>

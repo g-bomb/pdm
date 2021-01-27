@@ -26,17 +26,13 @@
         android:id="@+id/textLocal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginBottom="52dp"
+        android:layout_marginBottom="32dp"
         android:text="@string/textLocal"
         android:textColor="#000000"
         android:textSize="15dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/settingsButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/textPhoto" />
 
     <TextView
         android:id="@+id/textPhoto"
@@ -51,9 +47,9 @@
         app:layout_constraintBottom_toTopOf="@+id/buttonCamera"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/editTextLocal"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.172"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textDescription"
+        app:layout_constraintTop_toBottomOf="@+id/editTextLocal"
         app:layout_constraintVertical_bias="0.655" />
 
     <TextView
@@ -65,9 +61,7 @@
         android:textColor="#000000"
         android:textSize="15dp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/editTextName"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textDescription"
         app:layout_constraintTop_toBottomOf="@+id/title_report_beach" />
 
     <EditText
@@ -78,12 +72,11 @@
         android:layout_marginRight="8dp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/editTextLocal"
+        app:layout_constraintBottom_toBottomOf="@+id/textName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/textName"
-        app:layout_constraintTop_toBottomOf="@+id/title_report_beach"
-        app:layout_constraintVertical_bias="0.6" />
+        app:layout_constraintTop_toTopOf="@+id/textName" />
 
     <TextView
         android:id="@+id/textDescription"
@@ -94,9 +87,7 @@
         android:textColor="#000000"
         android:textSize="15dp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/editTextLocal"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textPhoto"
         app:layout_constraintTop_toBottomOf="@+id/textName" />
 
     <EditText
@@ -105,14 +96,14 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="80dp"
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
-        app:layout_constraintBottom_toTopOf="@+id/selectedPhoto"
+        app:layout_constraintBottom_toBottomOf="@+id/textDescription"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textDescription" />
+        app:layout_constraintStart_toEndOf="@+id/textDescription"
+        app:layout_constraintTop_toTopOf="@+id/textDescription" />
 
     <ImageView
         android:id="@+id/selectedPhoto"
@@ -179,7 +170,7 @@
         android:id="@+id/addressText"
         android:layout_width="166dp"
         android:layout_height="98dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="32dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/buttonCheck"
         app:layout_constraintEnd_toEndOf="parent"
@@ -190,7 +181,7 @@
         android:id="@+id/settingsButton"
         android:layout_width="84dp"
         android:layout_height="82dp"
-        android:layout_marginBottom="68dp"
+        android:layout_marginBottom="32dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:cropToPadding="false"
         android:scaleType="fitStart"

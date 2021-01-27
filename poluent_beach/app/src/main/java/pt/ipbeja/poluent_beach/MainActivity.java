@@ -31,31 +31,21 @@ public class MainActivity extends AppCompatActivity {
 
 
         //Click listeneres for all the buttons, the settings button starts activity for result to inform if there was a language change.
-        buttonSettings.setOnClickListener(v -> startActivityForResult(new Intent(MainActivity.this, SettingsActivity.class), LANGUAGE_CODE));
+        buttonSettings.setOnClickListener(v ->
+                startActivityForResult(new Intent(MainActivity.this, SettingsActivity.class), LANGUAGE_CODE));
+
+
+//        buttonSettings.setOnClickListener(v -> {
+//            Intent ddd = new Intent(MainActivity.this, SettingsActivity.class);
+//            (MainActivity.this).finish();
+//            ddd.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//            startActivity(ddd);
+//        });
 
         reportButton.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, ReportBeach.class)));
 
         showButton.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, ShowBeach.class)));
 
         showDaoButton.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, ShowBeachDao.class)));
-    }
-
-    /**
-     * Method responsible for checking if there was a language change when coming from the settings activity
-     *
-     * @param requestCode code used to identify the operation that took place
-     * @param resultCode  indicator of weather the operation was successful or not
-     * @param data        intent received from the previous activity
-     */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == LANGUAGE_CODE && resultCode == RESULT_OK) {
-            //Intent refresh = new Intent(this, MainActivity.class);
-            //finish();
-            //startActivity(getIntent());
-            recreate();
-        }
-
     }
 }
