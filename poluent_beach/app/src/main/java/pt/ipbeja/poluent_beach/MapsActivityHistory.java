@@ -1,10 +1,8 @@
 package pt.ipbeja.poluent_beach;
 
-import androidx.fragment.app.FragmentActivity;
-
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.Bundle;
+
+import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -13,12 +11,15 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
-
+/**
+ *
+ * Show Location of Report
+ *
+ * @author Tiago Azevedo 17427
+ * @author Bruno Guerra 16247
+ *
+ * IPBEJA - PDM 29/01/2020
+ */
 public class MapsActivityHistory extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -51,20 +52,17 @@ public class MapsActivityHistory extends FragmentActivity implements OnMapReadyC
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        //Get coordinates to a String
+        String coordinates = String.valueOf(this.gpsCoordinates);
 
-        String teste = String.valueOf(this.gpsCoordinates);
-
-        String[] latlong =  teste.split("-");
+        //Separate Latitude from Longitude
+        String[] latlong =  coordinates.split("-");
         double latitude = Double.parseDouble(latlong[0]);
         double longitude = Double.parseDouble("-" + latlong[1]);
 
-
-
-
-
-        // Add a marker in Sydney and move the camera
+        // Add a marker in Coordinates and move the camera
         LatLng marker = new LatLng(latitude, longitude);
-        mMap.addMarker(new MarkerOptions().position(marker).title(teste));
+        mMap.addMarker(new MarkerOptions().position(marker).title(coordinates));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker, 15));
     }
 }

@@ -24,11 +24,20 @@ import java.util.List;
 
 import pt.ipbeja.poluent_beach.data.Report;
 
+/**
+ *
+ * RecycleView to Show Reports from Firebase
+ *
+ * @author Tiago Azevedo 17427
+ * @author Bruno Guerra 16247
+ *
+ * IPBEJA - PDM 29/01/2020
+ */
 public class ShowBeach extends AppCompatActivity {
 
     private ReportAdapter adapter;
     private Button backButton;
-    private List<String> test1;
+    private List<String> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,22 +70,27 @@ public class ShowBeach extends AppCompatActivity {
         refreshInfo();
     }
 
-
+    /**
+     * Refresh Infomation from Firestore
+     */
     private void refreshInfo()
     {
-        this.test1 = new ArrayList<>();
+        this.list = new ArrayList<>();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("reports")
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
-                            this.test1.add(document.getId());
+                            this.list.add(document.getId());
                         }
                     }
                 });
     }
 
+    /**
+     * ReportAdapter gets Information from Firestore to the RecyclerView
+     */
     public class ReportAdapter extends RecyclerView.Adapter<ReportViewHolder> {
 
         private List<Report> data = new ArrayList<>();
@@ -105,12 +119,16 @@ public class ShowBeach extends AppCompatActivity {
         }
     }
 
+    /**
+     * Permits Interaction with all the items in the RecycleView
+     */
     public class ReportViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView name;
         private final TextView description;
         private final TextView gps;
-        private final ImageView praia;
+        private final ImageView image;
+        private final TextView data;
         private Report report;
 
         public ReportViewHolder(@NonNull View itemView) {
@@ -118,7 +136,8 @@ public class ShowBeach extends AppCompatActivity {
             name = itemView.findViewById(R.id.report_name);
             description = itemView.findViewById(R.id.report_description);
             gps = itemView.findViewById(R.id.report_gps);
-            praia = itemView.findViewById(R.id.beach_image);
+            image = itemView.findViewById(R.id.beach_image);
+            data = itemView.findViewById(R.id.report_date);
 
             itemView.setOnClickListener(v -> {
                 String stringId = returnID(getAdapterPosition());
@@ -128,6 +147,7 @@ public class ShowBeach extends AppCompatActivity {
                 position.putExtra("gps", report.getGps());
                 position.putExtra("photo", report.getFileLink());
                 position.putExtra("id", stringId);
+                position.putExtra("data", report.getCurrentData());
                 v.getContext().startActivity(position);
             });
         }
@@ -137,12 +157,13 @@ public class ShowBeach extends AppCompatActivity {
             name.setText(report.getName());
             description.setText(report.getDescription());
             gps.setText(report.getGps());
-            Glide.with(getApplicationContext()).load(report.getFileLink()).into(praia);
+            Glide.with(getApplicationContext()).load(report.getFileLink()).into(image);
+            data.setText(report.getCurrentData());
         }
 
     }
 
     private String returnID(int adapterPosition) {
-        return this.test1.get(adapterPosition);
+        return this.list.get(adapterPosition);
     }
 }

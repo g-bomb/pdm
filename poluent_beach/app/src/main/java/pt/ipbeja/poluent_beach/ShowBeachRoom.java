@@ -1,12 +1,5 @@
 package pt.ipbeja.poluent_beach;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +7,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
@@ -23,9 +22,9 @@ import java.util.List;
 import pt.ipbeja.poluent_beach.data.Report;
 import pt.ipbeja.poluent_beach.data.database.ReportDatabase;
 
-public class ShowBeachDao extends AppCompatActivity {
+public class ShowBeachRoom extends AppCompatActivity {
 
-    private ShowBeachDao.ReportAdapter adapter;
+    private ShowBeachRoom.ReportAdapter adapter;
     private Button backButton;
     private RecyclerView recyclerView;
 
@@ -34,11 +33,11 @@ public class ShowBeachDao extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_beach);
 
-       this.recyclerView = findViewById(R.id.report_list);
+        this.recyclerView = findViewById(R.id.report_list);
         backButton = findViewById(R.id.button_back_list);
 
         RecyclerView.LayoutManager lm = new LinearLayoutManager(this);
-        this.adapter = new ShowBeachDao.ReportAdapter();
+        this.adapter = new ShowBeachRoom.ReportAdapter();
         this.recyclerView.setLayoutManager(lm);
         this.recyclerView.setAdapter(adapter);
 
@@ -52,6 +51,9 @@ public class ShowBeachDao extends AppCompatActivity {
         refreshData();
     }
 
+    /**
+     * Refresh Data from room
+     */
     private void refreshData() {
         List<Report> reports = ReportDatabase.getInstance(getApplicationContext())
                 .reportDao()
@@ -59,7 +61,10 @@ public class ShowBeachDao extends AppCompatActivity {
         adapter.setData(reports);
     }
 
-    public class ReportAdapter extends RecyclerView.Adapter<ShowBeachDao.ReportViewHolder> {
+    /**
+     * ReportAdapter gets Information from room to the RecyclerView
+     */
+    public class ReportAdapter extends RecyclerView.Adapter<ShowBeachRoom.ReportViewHolder> {
 
         private List<Report> data = new ArrayList<>();
 
@@ -70,9 +75,9 @@ public class ShowBeachDao extends AppCompatActivity {
 
         @NonNull
         @Override
-        public ShowBeachDao.ReportViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        public ShowBeachRoom.ReportViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_beach_item, parent, false);
-            return new ShowBeachDao.ReportViewHolder(view);
+            return new ShowBeachRoom.ReportViewHolder(view);
         }
 
         @Override
@@ -87,6 +92,9 @@ public class ShowBeachDao extends AppCompatActivity {
         }
     }
 
+    /**
+     * Permits Interaction with all the items in the RecycleView
+     */
     public class ReportViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView name;
@@ -103,7 +111,7 @@ public class ShowBeachDao extends AppCompatActivity {
             praia = itemView.findViewById(R.id.beach_image);
 
             itemView.setOnLongClickListener(v -> {
-                new AlertDialog.Builder(ShowBeachDao.this)
+                new AlertDialog.Builder(ShowBeachRoom.this)
                         .setTitle(report.getName())
                         .setMessage(R.string.dialog_box_text2)
                         .setPositiveButton(R.string.dialog_box_text1, (dialog, which) -> {

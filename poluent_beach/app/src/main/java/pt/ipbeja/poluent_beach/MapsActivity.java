@@ -1,21 +1,19 @@
 package pt.ipbeja.poluent_beach;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.FragmentActivity;
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -25,13 +23,20 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ *
+ * Choose Place Where the Report Is
+ *
+ * @author Tiago Azevedo 17427
+ * @author Bruno Guerra 16247
+ *
+ * IPBEJA - PDM 29/01/2020
+ */
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -40,8 +45,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final int LOCATION_PERMISSION = 101;
     private Button confirmButton;
     private Geocoder geocoder;
-    private List<Address> addresses;
-    private String address;
     private String lat;
     private String log;
 
@@ -56,6 +59,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         confirmButton = findViewById(R.id.confirmMap);
 
+        //Pass Information with PutExtra
         confirmButton.setOnClickListener(v -> {
             Intent prevIntent = getIntent();
             prevIntent.putExtra("lat", this.lat);
@@ -64,6 +68,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             finish();
         });
 
+        //Get Current Location From User
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         fetchLocation();
     }
@@ -90,6 +95,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
     }
+
+    /**
+     * Save to Strings GPS Latitude and Longitude
+     * @param latLng coordinates
+     */
     public  void coordinates(LatLng latLng)
     {
         this.lat = String.valueOf(latLng.latitude);

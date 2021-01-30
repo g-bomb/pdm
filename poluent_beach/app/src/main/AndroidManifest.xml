@@ -20,7 +20,7 @@
         android:roundIcon="@mipmap/ic_launcher_2_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Poluent_beach">
-        <activity android:name=".ShowBeachDao"></activity>
+        <activity android:name=".ShowBeachRoom"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

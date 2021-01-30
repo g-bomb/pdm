@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,11 +32,24 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 import pt.ipbeja.poluent_beach.data.Report;
 import pt.ipbeja.poluent_beach.data.database.ReportDatabase;
 
+/**
+ *
+ * Report the Trash to DAO and Firebase
+ *
+ * @author Tiago Azevedo 17427
+ * @author Bruno Guerra 16247
+ *
+ * IPBEJA - PDM 29/01/2020
+ */
 public class ReportBeach extends AppCompatActivity {
 
     private static final int CAMERA_PERMISSION = 51;
@@ -58,7 +72,7 @@ public class ReportBeach extends AppCompatActivity {
     private Button buttonCancel;
     private ImageView selectedPhoto;
     private ImageButton mapButton;
-    private TextView addressText;
+    private TextView gpsText;
     private Bitmap photo;
 
     @Override
@@ -73,14 +87,17 @@ public class ReportBeach extends AppCompatActivity {
 
         //Click listener for the confirm button that compresses the image selected and converts it to a byte array,
         //and a new report is created with the information currently selected to add to the database.
-        //An async task is used to stored data in the database
         buttonCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 String name = editTextName.getText().toString();
                 String description = editTextLocal.getText().toString();
-                String gps = addressText.getText().toString();
+                String gps = gpsText.getText().toString();
+                //get date, convert to a new format and put to a string
+                Date c = Calendar.getInstance().getTime();
+                SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
+                String currentData = df.format(c);
 
                 FirebaseStorage storage = FirebaseStorage.getInstance();
 
@@ -96,6 +113,7 @@ public class ReportBeach extends AppCompatActivity {
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                 byte[] data = baos.toByteArray();
 
+                //Get Image
                 UploadTask uploadTask = imagesRef.putBytes(data);
                 uploadTask.addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -110,6 +128,7 @@ public class ReportBeach extends AppCompatActivity {
                     }
                 });
 
+                //Get Image Link
                 uploadTask.addOnSuccessListener(taskSnapshot -> taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(
                         new OnCompleteListener<Uri>() {
                             @Override
@@ -117,18 +136,16 @@ public class ReportBeach extends AppCompatActivity {
                                 if (task.isSuccessful())
                                 {
                                     String fileLink = task.getResult().toString();
-
-                                    // Criar um objecto da class Report --- FireBase
-                                    Report report = new Report(name, description, gps, fileLink);
+                                    // Create object class Report --- FireBase
+                                    Report report = new Report(name, description, gps, fileLink, currentData);
                                     FirebaseFirestore.getInstance()
                                             .collection("reports")
                                             .add(report)
                                             .addOnSuccessListener(ReportBeach.this, documentReference -> finish());
 
-
-                                    // Criar um objecto da class Report --- Room
-                                    Report report1 = new Report(0, name, description, gps, fileLink);
-                                    // E pedir ao DAO que o insira na BD
+                                    // Create object class Report --- Room
+                                    Report report1 = new Report(0, name, description, gps, fileLink, currentData);
+                                    // Ask Room to insert into Database
                                     ReportDatabase
                                             .getInstance(getApplicationContext())
                                             .reportDao()
@@ -155,39 +172,20 @@ public class ReportBeach extends AppCompatActivity {
         });
 
         //Click listener to access the camera of the phone. Permissions are requested before the access is allowed.
-        buttonCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (ActivityCompat.checkSelfPermission(ReportBeach.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(ReportBeach.this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION);
-                    return;
-                }
-
-                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
+        buttonCamera.setOnClickListener(v -> {
+            if (ActivityCompat.checkSelfPermission(ReportBeach.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(ReportBeach.this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION);
+                return;
             }
+            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
         });
 
         //Click listener for the location button that opens the map activity when clicked
-        mapButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivityForResult(new Intent(ReportBeach.this, MapsActivity.class), MAP_REQUEST_CODE);
-            }
-        });
+        mapButton.setOnClickListener(v -> startActivityForResult(new Intent(ReportBeach.this, MapsActivity.class), MAP_REQUEST_CODE));
 
         //Click listener to finish the activity
-        buttonCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-    }
-
-    private void basedadosdao(String name, String description, String gps, String fileLink ){
-
+        buttonCancel.setOnClickListener(v -> finish());
 
     }
 
@@ -209,7 +207,7 @@ public class ReportBeach extends AppCompatActivity {
 
         selectedPhoto.setVisibility(View.INVISIBLE);
         mapButton = findViewById(R.id.settingsButton);
-        addressText = findViewById(R.id.addressText);
+        gpsText = findViewById(R.id.addressText);
 
         buttonCheck = findViewById(R.id.buttonCheck);
         buttonCancel = findViewById(R.id.buttonCancel);
@@ -250,13 +248,11 @@ public class ReportBeach extends AppCompatActivity {
             selectedPhoto.setVisibility(View.VISIBLE);
         } else if (requestCode == MAP_REQUEST_CODE && resultCode == RESULT_OK) {
             String gps = data.getStringExtra("lat") + data.getStringExtra("log");
-            addressText.setText(gps);
-            addressText.setVisibility(View.VISIBLE);
+            gpsText.setText(gps);
+            gpsText.setVisibility(View.VISIBLE);
         }
-        if (selectedPhoto.getDrawable()!=null && !addressText.getText().toString().equals("")) {
+        if (selectedPhoto.getDrawable()!=null && !gpsText.getText().toString().equals("")) {
             buttonCheck.setEnabled(true);
         }
-
     }
-
 }
